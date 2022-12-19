@@ -1,6 +1,6 @@
 # dormitory_vue
 
-This template should help get you started developing with Vue 3 in Vite.
+这个模板是通过vite加vue3建立的，加入了腾讯的vue3ui组件
 
 ## Recommended IDE Setup
 
