@@ -1,6 +1,6 @@
 # dormitory_vue
 
-这个模板是通过vite加vue3建立的，加入了腾讯的vue3ui组件
+这个模板是通过vite加vue3建立的，加入了腾讯的element-plus ui组件
 
 ## Recommended IDE Setup
 
