@@ -1,8 +1,6 @@
 <template>
-    <div style="display: block,width: 100%;;">
-        <Header></Header>
-        <Login></Login>
-    </div>
+    
+    <el-button type="success">确定</el-button>
     
 </template>
 <script setup lang="ts">
