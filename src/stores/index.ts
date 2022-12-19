@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const LoginState = defineStore('main', {
   state: () => {
     return {
-      LoginId:'',
+      username:'',
       LoginJwt:'',
       AutoLogin:false,
       remenber:false
@@ -13,7 +13,7 @@ export const LoginState = defineStore('main', {
   actions: {
     LoginSucceeded(UserId: string,LoginJwt: string,Auto: boolean,Reme: boolean){
       this.$patch({
-        LoginId: UserId,
+        username: UserId,
         LoginJwt:LoginJwt,
         AutoLogin:Auto,
         remenber:Reme
