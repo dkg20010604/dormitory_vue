@@ -12,9 +12,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "@jridgewell/sourcemap-codec": "^1.4.14",
     "@microsoft/signalr": "^7.0.0",
     "echarts": "^5.4.1",
+    "element-plus": "^2.2.27",
     "pinia": "^2.0.28",
     "tdesign-vue-next": "^0.26.2",
     "vue": "^3.2.45",

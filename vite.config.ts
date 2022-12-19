@@ -7,6 +7,8 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { TDesignResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,14 +16,17 @@ export default defineConfig({
     vue(),
     vueJsx(),
     AutoImport({
-      resolvers: [TDesignResolver({
-        library: 'vue-next'
-      })],
+      imports: ['vue'],
+      resolvers: [
+        TDesignResolver({library: 'vue-next'}),
+        ElementPlusResolver()
+      ],
     }),
     Components({
-      resolvers: [TDesignResolver({
-        library: 'vue-next'
-      })],
+      resolvers: [
+        TDesignResolver({library: 'vue-next'}),
+        ElementPlusResolver()
+      ],
     }),
   ],
   resolve: {
