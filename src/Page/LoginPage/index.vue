@@ -16,7 +16,7 @@
                     </div>
                     <el-form-item class="Loginstatus">
                         <el-button @click="LoginClick()" type="primary" style="margin: auto;">登录</el-button>
-                        <el-button style="margin: auto;">重置</el-button>
+                        <el-button style="margin: auto;" @click="reset(LoginRules)">重置</el-button>
                     </el-form-item>
                 </el-form>
             </el-card>
@@ -43,6 +43,12 @@ const rules = reactive({
     username: [{ required: true, message: '你还没有输入账号', trigger: 'blur' },],
     password: [{ required: true, message: '你还没有输入密码', trigger: 'blur' },],
 })
+const reset = (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    formEl.resetFields()
+    LoginInfo.reme=false
+    LoginInfo.auto=false
+}
 const LoginClick = async () => {
     LoginRules.value?.validate((validate: boolean) => {
         if (validate) {
