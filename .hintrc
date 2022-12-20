@@ -5,6 +5,12 @@
   "hints": {
     "typescript-config/consistent-casing": "off",
     "typescript-config/strict": "off",
-    "meta-viewport": "off"
+    "meta-viewport": "off",
+    "axe/text-alternatives": [
+      "default",
+      {
+        "document-title": "off"
+      }
+    ]
   }
 }
