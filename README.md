@@ -1,4 +1,4 @@
-# dormitory_vue
+# 宿舍智能管理系统 : Vue + Vue-Router + Pinia + Element-Plus + TS + ECharts + Vite
 
 这个模板是通过vite加vue3建立的，加入了element-plus ui组件
 状态管理使用Pinia（相当于全局变量，但网页刷新后会消失），访问api使用fetch，页面跳转使用vue-route
