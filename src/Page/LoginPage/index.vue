@@ -1,6 +1,6 @@
 <template>
-    <div class="centerpage" v-loading="loading" style="float: left;display: flex;flex:auto;">
-        <div class="opa" style="float: left;">
+    <div class="centerpage" v-loading="loading">
+        <div class="opa">
             <el-card class="bos-card" shadow="hover">
                 <h3>欢迎来到后台管理系统</h3>
                 <el-form class="Loginstatus" ref="LoginRules" :model="LoginInfo" :rules="rules">
@@ -21,8 +21,6 @@
                 </el-form>
             </el-card>
         </div>
-    </div>
-    <div>
     </div>
 </template>
 <script lang="ts" setup>
@@ -46,8 +44,8 @@ const rules = reactive({
 const reset = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.resetFields()
-    LoginInfo.reme=false
-    LoginInfo.auto=false
+    LoginInfo.reme = false
+    LoginInfo.auto = false
 }
 const LoginClick = async () => {
     LoginRules.value?.validate((validate: boolean) => {
@@ -147,5 +145,33 @@ watch(
 
 </script>
 <style scoped>
+.centerpage {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.bos-card {
+  height: auto;
+}
+
+.opa div {
+  background-color: rgba(255, 255, 255, 0.8)
+}
+
+.loginitem {
+  margin: 20px;
+}
+
+.Loginstatus div {
+  opacity: 1;
+  font-style: normal;
+}
+
+h3 {
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
 </style>
