@@ -1,34 +1,33 @@
 <template>
-    <div class="Teacher_Index">
+    <div class="Student">
       <el-container>
-        <el-aside width="200px" class="Teacher_Indes_Menu">
+        <el-aside width="200px" class="StudentMenu">
           <Menu />
         </el-aside>
         <el-container>
-          <el-header>Header</el-header>
-          <el-main>Tabs</el-main>
-          <el-footer>Footer</el-footer>
+          <el-header>学生</el-header>
+          <el-main>主要内容</el-main>
+          <el-footer><FooterItem></FooterItem></el-footer>
         </el-container>
       </el-container>
     </div>
   </template>
-  
-  
-  
-  
+    
   <script lang="ts" setup>
-  import Menu from '../Teacher/components/Teacher_Menu.vue'
-  
+  import { ElContainer, ElAside, ElHeader, ElMain, ElFooter } from 'element-plus';
+  import { useRoute } from 'vue-router';
+  import Menu from './components/StudentMeun.vue'
+  console.log(useRoute().params.id);
   </script>
-  
+    
   <style scoped>
-  .Teacher_Index {
+  .Student {
     position: relative;
     width: 100%;
     height: 100%;
   }
   
-  .Teacher_Indes_Menu {
+  .StudentMenu {
     background-color: #545c64;
     height: 100%;
   
@@ -47,4 +46,4 @@
     border-right-width: 0px
   }
   </style>
-  
+    

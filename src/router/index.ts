@@ -3,24 +3,46 @@ import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    //登陆页面路由
     {
+      //路由地址，显示在url中
       path: "/",
-      name: "home",
+      //路由名字(随便起名，不要重复，传参数可能用到)
+      name: "Home",
+      //导入页面
       component: () => import('../Page/LoginPage/index.vue'),
     },
+    //老师导航页路由
     {
-      path: "/main",
-      name: "mainpage",
-      component: () => import('../Page/MainPage/index.vue'),
+      path: "/:id",
+      name: "TeacherPage",
+      component: () => import('../Page/TeacherPage/index.vue'),
       //主页面的子页面，path要加上主页面main前缀
       //子页面可加多个，子页面中也可以加子页面
       children: [
-        {
-          path: '/main/persenpage',
-          name: '',
-          component: () => import('页面路径'),
-          children:[]
-        },
+        //老师功能路由
+      ]
+    },
+    //学生导航页路由
+    {
+      path: "/:id",
+      name: "StudentPage",
+      component: () => import('../Page/StudentPage/index.vue'),
+      //主页面的子页面，path要加上主页面main前缀
+      //子页面可加多个，子页面中也可以加子页
+      children: [
+        //学生功能路由
+      ]
+    },
+    //后勤导航路由
+    {
+      path: "/:id",
+      name: "LogisticsPage",
+      component: () => import('../Page/LogisticsPage/index.vue'),
+      //主页面的子页面，path要加上主页面main前缀
+      //子页面可加多个，子页面中也可以加子页面
+      children: [
+        //后勤功能路由
       ]
     }
   ],

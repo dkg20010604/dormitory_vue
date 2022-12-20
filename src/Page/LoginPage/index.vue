@@ -28,6 +28,7 @@ import { LoginState } from '../../stores/index'
 import { ElButton, ElCard, ElCheckbox, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, type Action, type FormInstance } from 'element-plus'
 import router from '@/router'
 import { ref, reactive, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 const login = LoginState()
 const loading = ref(false)
 const LoginInfo = reactive({
@@ -48,25 +49,45 @@ const reset = (formEl: FormInstance | undefined) => {
     LoginInfo.auto = false
 }
 const LoginClick = async () => {
-    LoginRules.value?.validate((validate: boolean) => {
-        if (validate) {
-            loading.value = true
-            Login(LoginInfo.username, LoginInfo.password)
-        }
-        else {
-            ElMessageBox.alert('This is a message', 'Title', {
-                // if you want to disable its autofocus
-                // autofocus: false,
-                confirmButtonText: 'OK',
-                callback: (action: Action) => {
-                    ElMessage({
-                        type: 'info',
-                        message: `action: ${action}`,
-                    })
-                },
-            })
+    const a = LoginInfo.username.length % 3;
+    const pagename=ref('')
+    if(a==0){
+        pagename.value='TeacherPage'
+    }
+    else if(a==1){
+        pagename.value='StudentPage'
+    }
+    else if(a==2){
+        pagename.value='LogisticsPage'
+    }
+    router.push({
+        name:pagename.value,
+        params:{
+            id:LoginInfo.username
         }
     })
+
+
+    //登录流程，有用
+    // LoginRules.value?.validate((validate: boolean) => {
+    //     if (validate) {
+    //         loading.value = true
+    //         Login(LoginInfo.username, LoginInfo.password)
+    //     }
+    //     else {
+    //         ElMessageBox.alert('This is a message', 'Title', {
+    //             // if you want to disable its autofocus
+    //             // autofocus: false,
+    //             confirmButtonText: 'OK',
+    //             callback: (action: Action) => {
+    //                 ElMessage({
+    //                     type: 'info',
+    //                     message: `action: ${action}`,
+    //                 })
+    //             },
+    //         })
+    //     }
+    // })
 }
 async function Login(userid: string, password: string) {
     await fetch('https://localhost:5001/api/Login', {
@@ -115,15 +136,15 @@ async function Login(userid: string, password: string) {
 }
 onMounted(() => {
     //如果缓存区表明记住过密码，将缓存数据取出
-    if (localStorage.getItem('LR') == 'ture') {
-        LoginInfo.username = localStorage.getItem('LU') as string
-        LoginInfo.password = localStorage.getItem('LP') as string
-        LoginInfo.reme = true
-        //在记住密码的前提下，判断是否勾选过自定登录，尝试自动登录
-        if (localStorage.getItem('LA') == 'ture') {
-            Login(LoginInfo.username, LoginInfo.password);
-        }
-    }
+    // if (localStorage.getItem('LR') == 'ture') {
+    //     LoginInfo.username = localStorage.getItem('LU') as string
+    //     LoginInfo.password = localStorage.getItem('LP') as string
+    //     LoginInfo.reme = true
+    //     //在记住密码的前提下，判断是否勾选过自定登录，尝试自动登录
+    //     if (localStorage.getItem('LA') == 'ture') {
+    //         Login(LoginInfo.username, LoginInfo.password);
+    //     }
+    // }
 })
 watch(
     () => LoginInfo.reme,
@@ -146,32 +167,32 @@ watch(
 </script>
 <style scoped>
 .centerpage {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bos-card {
-  height: auto;
+    height: auto;
 }
 
 .opa div {
-  background-color: rgba(255, 255, 255, 0.8)
+    background-color: rgba(255, 255, 255, 0.8)
 }
 
 .loginitem {
-  margin: 20px;
+    margin: 20px;
 }
 
 .Loginstatus div {
-  opacity: 1;
-  font-style: normal;
+    opacity: 1;
+    font-style: normal;
 }
 
 h3 {
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 20px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 </style>
