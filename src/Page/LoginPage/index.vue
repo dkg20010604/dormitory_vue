@@ -44,10 +44,10 @@ const rules = reactive({
     password: [{ required: true, message: '你还没有输入密码', trigger: 'blur' },],
 })
 const LoginClick = async () => {
-    LoginRules.value?.validate((validate: any) => {
+    LoginRules.value?.validate((validate: boolean) => {
         if (validate) {
             loading.value = true
-            Login()
+            Login(LoginInfo.username, LoginInfo.password)
         }
         else {
             ElMessageBox.alert('This is a message', 'Title', {
@@ -64,7 +64,7 @@ const LoginClick = async () => {
         }
     })
 }
-async function Login() {
+async function Login(userid: string, password: string) {
     await fetch('https://localhost:5001/api/Login', {
         method: 'POST',
         headers: {
@@ -72,21 +72,31 @@ async function Login() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: LoginInfo.username,
-            password: LoginInfo.password
+            username: userid,
+            password: password
         })
     }).then(res => res.json())
         .then(data => {
             if (data.code == 200) {
+                //存储jwt认证码
+                localStorage.setItem('LJ', data.data)
                 //存储全局变量,页面刷新后失效
                 login.LoginSucceeded(LoginInfo.username, data.data, LoginInfo.auto, LoginInfo.reme)
+                //勾选记住密码后在本地缓存存储信息
                 if (LoginInfo.reme) {
-                    localStorage.setItem('LJ', data.data)
                     localStorage.setItem('LU', LoginInfo.username)
                     localStorage.setItem('LP', LoginInfo.password)
                     localStorage.setItem('LA', LoginInfo.auto as unknown as string)
                     localStorage.setItem('LR', LoginInfo.reme as unknown as string)
                 }
+                //否则清空信息
+                else {
+                    localStorage.removeItem('LU')
+                    localStorage.removeItem('LP')
+                    localStorage.removeItem('LA')
+                    localStorage.removeItem('LR')
+                }
+                //跳转页面
                 router.push({
                     name: "mainpage"
                 })
@@ -100,17 +110,15 @@ async function Login() {
         });
 }
 onMounted(() => {
+    //如果缓存区表明记住过密码，将缓存数据取出
     if (localStorage.getItem('LR') == 'ture') {
         LoginInfo.username = localStorage.getItem('LU') as string
         LoginInfo.password = localStorage.getItem('LP') as string
-        LoginInfo.reme=true
-    }
-    else{
-        return;
-    }
-    if(localStorage.getItem('LA') == 'ture')
-    {
-        Login();
+        LoginInfo.reme = true
+        //在记住密码的前提下，判断是否勾选过自定登录，尝试自动登录
+        if (localStorage.getItem('LA') == 'ture') {
+            Login(LoginInfo.username, LoginInfo.password);
+        }
     }
 })
 watch(
