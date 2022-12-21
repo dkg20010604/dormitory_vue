@@ -1,51 +1,57 @@
 <template>
-    <div class="Logisticsr">
+  <div class="Logisticsr">
+    <el-container>
+      <el-aside width="200px" class="LogisticsrMenu">
+        <Menu />
+      </el-aside>
       <el-container>
-        <el-aside width="200px" class="LogisticsrMenu">
-          <Menu />
-        </el-aside>
-        <el-container>
-          <el-header>后勤</el-header>
-          <el-main>主要内容</el-main>
-          <el-footer><div>
+        <el-header>
+          <Header></Header>
+        </el-header>
+        <el-main><Main></Main></el-main>
+        <el-footer style="background-color: cyan;">
+          <div>
             <FooterItem></FooterItem>
-          </div></el-footer>
-        </el-container>
+          </div>
+        </el-footer>
       </el-container>
-    </div>
-  </template>
+    </el-container>
+  </div>
+</template>
 
-  <script lang="ts" setup>
-  import { ElContainer, ElAside, ElHeader, ElMain, ElFooter } from 'element-plus';
-  import { useRoute } from 'vue-router';
-  import Menu from './components/LogisticsMenu.vue'
-  console.log(useRoute().params.id);
-  </script>
+<script lang="ts" setup>
+import { ElContainer, ElAside, ElHeader, ElMain, ElFooter } from 'element-plus';
+import { useRoute } from 'vue-router';
+import Header from './components/LogisticsHeader.vue';
+import Menu from './components/LogisticsMenu.vue'
+import Main from './components/LogisticsMain.vue'
+console.log(useRoute().params.id);
+</script>
     
-  <style scoped>
-  .Logisticsr {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .LogisticsrMenu {
-    background-color: #545c64;
-    height: 100%;
-  
-  }
-  
-  .el-container {
-    height: 100%
-  }
-  
-  .el-header {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-  
-  :deep(ul.el-menu) {
-    border-right-width: 0px
-  }
-  </style>
+<style scoped>
+.Logisticsr {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.LogisticsrMenu {
+  background-color: #545c64;
+  height: 100%;
+
+}
+
+.el-container {
+  height: 100%
+}
+
+.el-header {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+:deep(ul.el-menu) {
+  border-right-width: 0px
+}
+</style>
     

@@ -7,7 +7,13 @@
         <el-col :span="2">外部链接：</el-col>
         <el-col :span="2"><el-link href="https://github.com/dkg20010604/dormitory_vue"
                 target="_blank">Github</el-link></el-col>
-        <el-col :span="4"><el-link href="https://element.eleme.io" target="_blank">Element-Plus</el-link></el-col>
+        <el-col :span="4"><el-link href="https://element-plus.org/zh-CN/#/zh-CN"
+                target="_blank">Element-Plus</el-link></el-col>
+    </el-row>
+    <el-row justify="center">
+        <el-col>
+            <p style="display:flex;align-items: center;">By：张楠团队</p>
+        </el-col>
     </el-row>
 </template>
 <style scoped>

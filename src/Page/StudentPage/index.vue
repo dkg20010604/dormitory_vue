@@ -7,7 +7,7 @@
         <el-container>
           <el-header>学生</el-header>
           <el-main>主要内容</el-main>
-          <el-footer><FooterItem></FooterItem></el-footer>
+          <el-footer style="background-color: cyan;"><FooterItem></FooterItem></el-footer>
         </el-container>
       </el-container>
     </div>

@@ -14,7 +14,7 @@ const router = createRouter({
     },
     //老师导航页路由
     {
-      path: "/:id",
+      path: "/Teacher:id",
       name: "TeacherPage",
       component: () => import('../Page/TeacherPage/index.vue'),
       //主页面的子页面，path要加上主页面main前缀
@@ -25,7 +25,7 @@ const router = createRouter({
     },
     //学生导航页路由
     {
-      path: "/:id",
+      path: "/Student:id",
       name: "StudentPage",
       component: () => import('../Page/StudentPage/index.vue'),
       //主页面的子页面，path要加上主页面main前缀
@@ -36,7 +36,7 @@ const router = createRouter({
     },
     //后勤导航路由
     {
-      path: "/:id",
+      path: "/Logistic:id",
       name: "LogisticsPage",
       component: () => import('../Page/LogisticsPage/index.vue'),
       //主页面的子页面，path要加上主页面main前缀

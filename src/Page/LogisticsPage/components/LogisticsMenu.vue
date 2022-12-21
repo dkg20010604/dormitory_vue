@@ -53,8 +53,8 @@ const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
 //更改el-menu-item中的index可进行自定义操作
-const select=(key:string)=>{
+const select = (key: string) => {
     console.log(key);
-    
+
 }
 </script>
