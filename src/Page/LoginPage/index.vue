@@ -29,6 +29,7 @@ import { ElButton, ElCard, ElCheckbox, ElForm, ElFormItem, ElInput, ElMessage, E
 import router from '@/router'
 import { ref, reactive, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import * as signalR from '@microsoft/signalr'
 const login = LoginState()
 const loading = ref(false)
 const LoginInfo = reactive({
@@ -145,6 +146,16 @@ onMounted(() => {
     //         Login(LoginInfo.username, LoginInfo.password);
     //     }
     // }
+    //与服务端建立signalR连接
+    const conn=new signalR.HubConnectionBuilder().withUrl('https://localhost:5001/chathub',{}).build()
+    conn.on('ReceiveMessage',data=>{
+        console.log(data);
+    })
+    conn.start().then(()=>{
+        console.log('连接成功');
+    }).catch(err=>{
+        console.log(err);
+    })
 })
 watch(
     () => LoginInfo.reme,

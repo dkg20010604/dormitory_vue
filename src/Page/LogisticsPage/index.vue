@@ -5,10 +5,16 @@
         <Menu />
       </el-aside>
       <el-container>
-        <el-header>
-          <Header></Header>
-        </el-header>
-        <el-main><Main></Main></el-main>
+        <div>
+
+          <el-header style="">
+            <Header></Header>
+          </el-header>
+          <hr style="color: aqua;height: 1px;background-color: aqua;"/>
+        </div>
+        <el-main>
+          <RouterView></RouterView>
+        </el-main>
         <el-footer style="background-color: cyan;">
           <div>
             <FooterItem></FooterItem>
@@ -20,12 +26,27 @@
 </template>
 
 <script lang="ts" setup>
+import { RouteLink } from '../../stores/route'
 import { ElContainer, ElAside, ElHeader, ElMain, ElFooter } from 'element-plus';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Header from './components/LogisticsHeader.vue';
 import Menu from './components/LogisticsMenu.vue'
-import Main from './components/LogisticsMain.vue'
+import router from '@/router';
+defineEmits(['changeview'])
 console.log(useRoute().params.id);
+watch(
+  () => RouteLink().route,
+  () => {
+    router.push({
+      name: RouteLink().route
+    })
+  }
+)
+onMounted(() => {
+  useRouter().push({
+    name: 'Employee'
+  })
+})
 </script>
     
 <style scoped>

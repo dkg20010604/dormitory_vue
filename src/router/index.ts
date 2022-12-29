@@ -43,6 +43,16 @@ const router = createRouter({
       //子页面可加多个，子页面中也可以加子页面
       children: [
         //后勤功能路由
+        {
+          path:'/Logistic:id/EmployeeManagement',
+          name:'Employee',
+          component:()=>import('../Page/LogisticsPage/components/MainPage/EmployeeManagement.vue')
+        },
+        {
+          path:'/Logistic:id/ToDoList',
+          name:'ToDoList',
+          component:()=>import('../Page/LogisticsPage/components/MainPage/ToDoList.vue')
+        },
       ]
     }
   ],
