@@ -10,11 +10,11 @@
         <el-col :span="4"><el-link href="https://element-plus.org/zh-CN/#/zh-CN"
                 target="_blank">Element-Plus</el-link></el-col>
     </el-row>
-    <el-row justify="center">
+    <!-- <el-row justify="center">
         <el-col>
             <p style="display:flex;align-items: center;">By：张楠团队</p>
         </el-col>
-    </el-row>
+    </el-row> -->
 </template>
 <style scoped>
 .el-row {

@@ -6,12 +6,11 @@
       </el-aside>
       <el-container>
         <div>
-
-          <el-header style="">
+          <el-header>
             <Header></Header>
           </el-header>
-          <hr style="color: aqua;height: 1px;background-color: aqua;"/>
         </div>
+        <hr style="color: aqua;height: 1px;background-color: aqua;" />
         <el-main>
           <RouterView></RouterView>
         </el-main>
@@ -27,28 +26,51 @@
 
 <script lang="ts" setup>
 import { RouteLink } from '../../stores/route'
-import { ElContainer, ElAside, ElHeader, ElMain, ElFooter } from 'element-plus';
+import { ElContainer, ElAside, ElHeader, ElMain, ElFooter, ElMessage } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
 import Header from './components/LogisticsHeader.vue';
 import Menu from './components/LogisticsMenu.vue'
 import router from '@/router';
-defineEmits(['changeview'])
 console.log(useRoute().params.id);
 watch(
   () => RouteLink().route,
   () => {
     router.push({
-      name: RouteLink().route
+      name: RouteLink().route,
     })
+    RouteLink().hub.send("SendMessage", "nihaop")
   }
 )
+//const hub=new signalR.HubConnectionBuilder().withUrl('http://localhost:4641/chathub').configureLogging(signalR.LogLevel.Error).build()
 onMounted(() => {
+  RouteLink().hub.on('getmessagr', (data) => {
+    ElMessage({
+      message: data
+    })
+  })
   useRouter().push({
     name: 'Employee'
   })
+  RouteLink().begenconn()
+  const methods = ['getmessagr']
+  const func =
+    [
+      (data: any) => {
+        ElMessage({
+          message: data
+        })
+      }
+    ]
+  RouteLink().starconn(methods, func)
+  // hub.start().then(()=>{
+  //   console.log('成功');
+
+  // }).catch(()=>{
+  //   console.log('失败');
+  // })
 })
 </script>
-    
+
 <style scoped>
 .Logisticsr {
   position: relative;
@@ -75,4 +97,3 @@ onMounted(() => {
   border-right-width: 0px
 }
 </style>
-    

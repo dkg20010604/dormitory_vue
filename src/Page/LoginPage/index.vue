@@ -50,48 +50,49 @@ const reset = (formEl: FormInstance | undefined) => {
     LoginInfo.auto = false
 }
 const LoginClick = async () => {
-    const a = LoginInfo.username.length % 3;
-    const pagename=ref('')
-    if(a==0){
-        pagename.value='TeacherPage'
-    }
-    else if(a==1){
-        pagename.value='StudentPage'
-    }
-    else if(a==2){
-        pagename.value='LogisticsPage'
-    }
-    router.push({
-        name:pagename.value,
-        params:{
-            id:LoginInfo.username
-        }
-    })
+    //临时测试登录
+    // const a = LoginInfo.username.length % 3;
+    // const pagename = ref('')
+    // if (a == 0) {
+    //     pagename.value = 'TeacherPage'
+    // }
+    // else if (a == 1) {
+    //     pagename.value = 'StudentPage'
+    // }
+    // else if (a == 2) {
+    //     pagename.value = 'LogisticsPage'
+    // }
+    // router.push({
+    //     name: pagename.value,
+    //     params: {
+    //         id: LoginInfo.username
+    //     }
+    // })
 
 
     //登录流程，有用
-    // LoginRules.value?.validate((validate: boolean) => {
-    //     if (validate) {
-    //         loading.value = true
-    //         Login(LoginInfo.username, LoginInfo.password)
-    //     }
-    //     else {
-    //         ElMessageBox.alert('This is a message', 'Title', {
-    //             // if you want to disable its autofocus
-    //             // autofocus: false,
-    //             confirmButtonText: 'OK',
-    //             callback: (action: Action) => {
-    //                 ElMessage({
-    //                     type: 'info',
-    //                     message: `action: ${action}`,
-    //                 })
-    //             },
-    //         })
-    //     }
-    // })
+    LoginRules.value?.validate((validate: boolean) => {
+        if (validate) {
+            loading.value = true
+            Login(LoginInfo.username, LoginInfo.password)
+        }
+        else {
+            ElMessageBox.alert('This is a message', 'Title', {
+                // if you want to disable its autofocus
+                // autofocus: false,
+                confirmButtonText: 'OK',
+                callback: (action: Action) => {
+                    ElMessage({
+                        type: 'info',
+                        message: `action: ${action}`,
+                    })
+                },
+            })
+        }
+    })
 }
 async function Login(userid: string, password: string) {
-    await fetch('https://localhost:5001/api/Login', {
+    await fetch('http://localhost:4641/api/Login', {
         method: 'POST',
         headers: {
             'accept': 'text/plain',
@@ -104,27 +105,30 @@ async function Login(userid: string, password: string) {
     }).then(res => res.json())
         .then(data => {
             if (data.code == 200) {
+                //储存用户名
+                localStorage.setItem('LU', LoginInfo.username)
                 //存储jwt认证码
                 localStorage.setItem('LJ', data.data)
                 //存储全局变量,页面刷新后失效
                 login.LoginSucceeded(LoginInfo.username, data.data, LoginInfo.auto, LoginInfo.reme)
                 //勾选记住密码后在本地缓存存储信息
                 if (LoginInfo.reme) {
-                    localStorage.setItem('LU', LoginInfo.username)
                     localStorage.setItem('LP', LoginInfo.password)
                     localStorage.setItem('LA', LoginInfo.auto as unknown as string)
                     localStorage.setItem('LR', LoginInfo.reme as unknown as string)
                 }
                 //否则清空信息
                 else {
-                    localStorage.removeItem('LU')
                     localStorage.removeItem('LP')
                     localStorage.removeItem('LA')
                     localStorage.removeItem('LR')
                 }
                 //跳转页面
                 router.push({
-                    name: "mainpage"
+                    name: "LogisticsPage",
+                    params: {
+                        id: LoginInfo.username
+                    }
                 })
             }
             else {
@@ -137,25 +141,15 @@ async function Login(userid: string, password: string) {
 }
 onMounted(() => {
     //如果缓存区表明记住过密码，将缓存数据取出
-    // if (localStorage.getItem('LR') == 'ture') {
-    //     LoginInfo.username = localStorage.getItem('LU') as string
-    //     LoginInfo.password = localStorage.getItem('LP') as string
-    //     LoginInfo.reme = true
-    //     //在记住密码的前提下，判断是否勾选过自定登录，尝试自动登录
-    //     if (localStorage.getItem('LA') == 'ture') {
-    //         Login(LoginInfo.username, LoginInfo.password);
-    //     }
-    // }
-    //与服务端建立signalR连接
-    const conn=new signalR.HubConnectionBuilder().withUrl('https://localhost:5001/chathub',{}).build()
-    conn.on('ReceiveMessage',data=>{
-        console.log(data);
-    })
-    conn.start().then(()=>{
-        console.log('连接成功');
-    }).catch(err=>{
-        console.log(err);
-    })
+    if (localStorage.getItem('LR') == 'ture') {
+        LoginInfo.username = localStorage.getItem('LU') as string
+        LoginInfo.password = localStorage.getItem('LP') as string
+        LoginInfo.reme = true
+        //在记住密码的前提下，判断是否勾选过自定登录，尝试自动登录
+        if (localStorage.getItem('LA') == 'ture') {
+            Login(LoginInfo.username, LoginInfo.password);
+        }
+    }
 })
 watch(
     () => LoginInfo.reme,

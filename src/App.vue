@@ -1,6 +1,5 @@
 <template>
-  <el-config-provider :locale="zhCn" style="width: 100%;
-    height: 100%;">
+  <el-config-provider :locale="zhCn">
     <RouterView/>
   </el-config-provider>
 </template>
