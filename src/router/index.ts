@@ -44,14 +44,19 @@ const router = createRouter({
       children: [
         //后勤功能路由
         {
-          path:'/Logistic:id/EmployeeManagement',
-          name:'Employee',
-          component:()=>import('../Page/LogisticsPage/components/MainPage/EmployeeManagement.vue')
+          path:'/Logistic:id/',
+          name:'Welcome',
+          component:()=>import('@/Page/LogisticsPage/components/MainPage/WelcomePage.vue')
         },
         {
-          path:'/Logistic:id/ToDoList',
-          name:'ToDoList',
-          component:()=>import('../Page/LogisticsPage/components/MainPage/ToDoList.vue')
+          path: '/Logistic:id/EmployeeManagement',
+          name: 'Employee',
+          component: () => import('../Page/LogisticsPage/components/MainPage/EmployeeManagement.vue')
+        },
+        {
+          path: '/Logistic:id/ToDoList',
+          name: 'ToDoList',
+          component: () => import('../Page/LogisticsPage/components/MainPage/ToDoList.vue')
         },
       ]
     }

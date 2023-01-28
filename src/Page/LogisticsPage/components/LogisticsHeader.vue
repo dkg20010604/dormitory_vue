@@ -9,9 +9,10 @@
         <el-badge :value="12" style="margin-top: 1%;">
             <el-button>
                 <template #default>
-                    <el-icon size="large" ><Notification /></el-icon>
+                    <el-icon size="large">
+                        <Notification />
+                    </el-icon>
                 </template>
-                
             </el-button>
         </el-badge>
     </div>

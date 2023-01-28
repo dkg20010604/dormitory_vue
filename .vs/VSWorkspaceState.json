@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\Page",
+    "\\src\\Page\\LogisticsPage",
+    "\\src\\Page\\LogisticsPage\\components"
   ],
-  "SelectedNode": "\\tsconfig.vitest.json",
+  "SelectedNode": "\\src\\Page\\LogisticsPage\\components\\LogisticsHeader.vue",
   "PreviewInSolutionExplorer": false
 }

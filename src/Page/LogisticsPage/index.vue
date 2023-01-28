@@ -49,7 +49,7 @@ onMounted(() => {
     })
   })
   useRouter().push({
-    name: 'Employee'
+    name: 'Welcome'
   })
   RouteLink().begenconn()
   const methods = ['getmessagr']
