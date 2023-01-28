@@ -27,12 +27,53 @@
       </div>
     </el-col>
   </el-row>
+  <el-upload
+    ref="upload"
+    action="http://localhost:4641/api/Logistics"
+    :limit="1"
+    :on-exceed="handleExceed"
+    :auto-upload="false"
+    :before-upload="beforupload"
+  >
+    <template #trigger>
+      <el-button type="primary">select file</el-button>
+    </template>
+    <el-button type="success" @click="submitUpload">
+      upload to server
+    </el-button>
+    <template #tip>
+      <div style="font-size:10px;font-style: normal;color: red;">至多上传一个文件，多次上传自动覆盖</div>
+    </template>
+  </el-upload>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup>import { RouteLink } from '@/stores/route';
+import { ElMessage, genFileId, type UploadInstance, type UploadProps, type UploadRawFile } from 'element-plus';
 import { Search } from '@element-plus/icons-vue'
-import { ElRow, ElCol, ElInput, ElSelect, ElOption, ElButton, ElTable, ElTableColumn, ElPagination, ElCalendar, ElMessage } from "element-plus";
-import * as SignalR from '@microsoft/signalr'
-import { RouteLink } from '@/stores/route';
+const upload = ref<UploadInstance>()
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+  upload.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  upload.value!.handleStart(file)
+}
+
+const submitUpload = () => {
+  upload.value!.submit()
+}
+const beforupload: UploadProps['beforeUpload'] = (rawFile) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error({
+      message:'只能上传图片格式文件'
+    })
+    return false
+  }
+  else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('图片最大可上传2M，已超标')
+    return false
+  }
+  return true
+}
 const pagedata = ref({
   pageable: false as boolean,
   pageindex: 1 as number,
@@ -42,14 +83,14 @@ const pagedata = ref({
   //如果有搜索保存搜索条件
   queryinfo: '' as any
 })
-const data = ref(new Date())
 const QueryString = ref('');
 const QueryType = ref('name');
 //模拟点击切换页码后获取数据
-const pagechange = (val: number) => {
+const pagechange = async (val: number) => {
   pagedata.value.pageable = true;
   pagedata.value.pageable = false;
   pagedata.value.pageindex = val;
+
   //构造查询条件
   if (QueryString.value.length > 0) {
     if (QueryType.value != 'none') {
@@ -59,7 +100,7 @@ const pagechange = (val: number) => {
         FieldValue: QueryString.value
       }];
     }
-    else{
+    else {
       var a = QueryString.value.split(' ');
       a.forEach(element => {
         element.trim();
@@ -67,7 +108,7 @@ const pagechange = (val: number) => {
     }
   }
   //清空数据
-  pagedata.value.tableData= '' as unknown as any[];
+  pagedata.value.tableData = '' as unknown as any[];
   //模拟后台查询拿到数据
   pagedata.value.tableData = [{
     status: '在岗',
@@ -80,8 +121,7 @@ const pagechange = (val: number) => {
     FieldValue: QueryString.value
   }];
   console.log(pagedata.value);
-  console.log(RouteLink().hub.send("SendMessage",'换页'));
-   
+  console.log(RouteLink().hub.send("SendMessage", '换页'));
 }
 
 const searchbutton = () => {

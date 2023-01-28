@@ -28,8 +28,7 @@ import { LoginState } from '../../stores/index'
 import { ElButton, ElCard, ElCheckbox, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, type Action, type FormInstance } from 'element-plus'
 import router from '@/router'
 import { ref, reactive, watch, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import * as signalR from '@microsoft/signalr'
+import { fa } from 'element-plus/es/locale';
 const login = LoginState()
 const loading = ref(false)
 const LoginInfo = reactive({
@@ -75,19 +74,6 @@ const LoginClick = async () => {
         if (validate) {
             loading.value = true
             Login(LoginInfo.username, LoginInfo.password)
-        }
-        else {
-            ElMessageBox.alert('This is a message', 'Title', {
-                // if you want to disable its autofocus
-                // autofocus: false,
-                confirmButtonText: 'OK',
-                callback: (action: Action) => {
-                    ElMessage({
-                        type: 'info',
-                        message: `action: ${action}`,
-                    })
-                },
-            })
         }
     })
 }
@@ -137,6 +123,11 @@ async function Login(userid: string, password: string) {
                     type: 'warning',
                 })
             }
+        })
+        .catch(err=>{
+            ElMessage.error(err.text);
+            console.log(err);
+            loading.value=false;
         });
 }
 onMounted(() => {
